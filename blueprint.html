@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DealPilot AI – Product Blueprint &amp; Workflow Documentation</title>
+<style>
+:root{--navy:#0b1530;--navy2:#16254d;--blue:#2f6fed;--ink:#14203d;--mut:#586282;--line:#dde3f0;--bg:#f6f8fc;--card:#fff;--ok:#16794f;--warn:#a96b00;--bad:#b3391b;--amber:#f3b73c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;font:16px/1.65 Inter,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:100}
+nav{position:fixed;inset:0 auto 0 0;width:270px;background:var(--navy);color:#b9c4e6;padding:20px 12px;overflow:auto;z-index:50}
+nav .brand{color:#fff;font-weight:700;font-size:17px;padding:0 10px 2px}nav .tag{padding:0 10px 16px;font-size:12px;color:#8393c4}
+nav a{display:flex;gap:10px;color:inherit;text-decoration:none;padding:6px 10px;border-radius:6px;font-size:14px;line-height:1.35;margin:1px 0}
+nav a b{width:18px;color:#6f8ff0;flex:none}nav a:hover{background:var(--navy2);color:#fff}nav a.on{background:var(--navy2);color:#fff;box-shadow:inset 3px 0 0 var(--blue)}
+#mb{display:none}
+main{margin-left:270px;padding:0 40px 80px;max-width:1160px}
+header.hero{background:var(--navy);color:#fff;margin:0 -40px 34px;padding:48px 40px 40px}
+header.hero h1{font-size:34px;margin:0 0 6px;letter-spacing:-.5px}header.hero p{margin:4px 0;color:#c4cff0;max-width:70ch}header.hero .tg{font-size:19px;color:#fff}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:13px}
+section{padding:30px 0 10px;border-bottom:1px solid var(--line)}
+h2{font-size:25px;margin:0 0 14px;letter-spacing:-.3px;display:flex;gap:12px;align-items:center}
+h2 .k{background:var(--navy);color:#fff;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-size:16px;flex:none}
+h3{font-size:17px;margin:22px 0 8px}p{margin:8px 0;max-width:80ch}ul{padding-left:20px;max-width:80ch}li{margin:3px 0}
+.g{display:grid;gap:14px;margin:14px 0}.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}.card h3,.card h4{margin:0 0 6px}.card ul{margin:6px 0}
+.note{border-left:4px solid var(--blue);background:#eaf0ff;padding:10px 16px;border-radius:0 8px 8px 0;margin:14px 0;max-width:90ch}
+.note.w{border-color:var(--amber);background:#fff5db}
+.t{display:inline-block;font-size:12px;font-weight:600;padding:1px 9px;border-radius:99px;vertical-align:middle;white-space:nowrap}
+.t-mvp{background:#dff3e8;color:var(--ok)}.t-fut{background:#ece7fb;color:#5a3fb3}.t-prop{background:#e3ebff;color:#2455c4}.t-ver{background:#dff3e8;color:var(--ok)}.t-inf{background:#fff0cf;color:var(--warn)}.t-unk{background:#e8eaf0;color:#555e78}
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f0f3fa;white-space:nowrap}tr:last-child td{border:0}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;margin:8px 0}summary{cursor:pointer;padding:11px 16px;font-weight:600;list-style:none}summary::before{content:"▸ ";color:var(--blue)}details[open]>summary::before{content:"▾ "}details>div{padding:0 16px 14px}
+code{background:#eef1f8;padding:1px 5px;border-radius:4px;font-size:13px}
+.dg{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto}.dg svg{display:block;width:100%;min-width:680px;height:auto}
+svg text{font:12.5px Inter,"Segoe UI",sans-serif;fill:#14203d}svg .lb{font-size:11.5px;fill:#586282}
+.nd rect,.nd polygon{stroke-width:1.5}.nd{cursor:pointer}.nd:hover rect,.nd:hover polygon,.nd.sel rect,.nd.sel polygon{stroke:#2f6fed;stroke-width:3}
+.s{fill:#0b1530}.s+text,.s~text{fill:#fff}.p{fill:#fff;stroke:#9db3e6}.dc{fill:#fff3d6;stroke:#e0a21e}.sd{fill:#f6f8fc;stroke:#b5bdd3}.pyc{fill:#e3ebff;stroke:#6f8ff0}.llm{fill:#ece7fb;stroke:#8d73e0}.n8{fill:#dff3ef;stroke:#3aa893}.hu{fill:#fff0cf;stroke:#e0a21e}.dbc{fill:#e8eaf0;stroke:#8a93ad}.ft{stroke-dasharray:5 4}
+.band{fill:#eef2fb}.fut-off .ft{opacity:.15}
+.ctl{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 14px;cursor:pointer;font:inherit;font-size:14px}.btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+#info{min-height:70px}
+.rg{display:grid;grid-template-columns:200px 1fr 50px;gap:10px;align-items:center;margin:6px 0;font-size:14px}.big{font-size:34px;font-weight:700}
+.tl{border-left:3px solid var(--line);margin-left:6px;padding-left:18px}
+.day{position:relative}.day::before{content:"";position:absolute;left:-26px;top:16px;width:11px;height:11px;border-radius:50%;background:var(--blue)}
+.pt{position:relative}
+footer{padding:30px 0;color:var(--mut);font-size:13px}
+@media(max-width:960px){nav{transform:translateX(-100%);transition:.2s;width:260px}nav.open{transform:none}main{margin:0;padding:0 18px 60px}header.hero{margin:0 -18px 26px;padding:60px 18px 30px}
+#mb{display:block;position:fixed;top:10px;right:12px;z-index:60;background:var(--navy);color:#fff;border:0;border-radius:8px;padding:7px 12px;font-size:15px}.c2,.c3{grid-template-columns:1fr}.rg{grid-template-columns:1fr 1fr 40px}}
+@media print{nav,#mb,#prog,.ctl{display:none}main{margin:0;padding:0;max-width:none}body{background:#fff;font-size:11pt}header.hero{margin:0 0 16px;print-color-adjust:exact;-webkit-print-color-adjust:exact}.card,details,.tw,.dg,tr{break-inside:avoid}section{break-before:auto}.dg svg{min-width:0}a{color:inherit}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<button id="mb" aria-label="Open navigation">☰ Menu</button>
+<nav id="nav"><div class="brand">DealPilot AI</div><div class="tag">Product Blueprint v0.1 · proposal</div><div id="links"></div></nav>
+<main>
+<header class="hero">
+ <h1>DealPilot AI</h1><p class="tg">From Market Research to Qualified Sales Opportunities.</p>
+ <p>Product explanation and workflow: why it is needed and how it works.</p>
+ <p>This document describes a proposed product. No integration, company research or customer result described here exists yet.</p>
+ </header>
+
+<section id="a" data-t="Executive Summary"><h2><span class="k">A</span>Executive Summary</h2>
+<p><b>DealPilot AI</b> helps a business find potential B2B customers, read their public information, collect evidence of possible business needs, judge fit against the user's offering, and prepare personalized outreach that a person reviews before anything is sent.</p>
+<div class="g c2">
+<div class="card"><h4>Who it is for</h4><p>Small teams that sell B2B services or software and prospect by hand: automation agencies, software firms, consultancies and SaaS vendors.</p></div>
+<div class="card"><h4>The problem</h4><p>Prospecting is slow and inconsistent. People guess whether a company needs a solution, then write every email from scratch.</p></div>
+<div class="card"><h4>How it differs from a lead-list tool</h4><p>A list tool returns names and contacts. DealPilot AI keeps the <b>evidence</b> behind every judgment, scores transparently, and writes only what that evidence supports.</p></div>
+<div class="card"><h4>Value proposition</h4><p>Fewer hours on research, consistent qualification criteria, and outreach that can be traced to sources, with a human decision before sending.</p></div></div>
+<h3>Why combine research, evidence, AI reasoning and workflow automation?</h3>
+<ul><li><b>Web research</b> supplies facts. Without it, AI invents plausible text.</li><li><b>Evidence-based qualification</b> separates what is known from what is guessed.</li><li><b>AI reasoning</b> reads unstructured pages and drafts language, which rules alone cannot do well.</li><li><b>Workflow automation</b> makes the process repeatable, retryable and auditable.</li></ul>
+<div class="note w"><b>Honest limits.</b> DealPilot AI does not discover hidden needs with certainty and cannot guarantee sales. It surfaces <i>possible</i> opportunities. Every finding is labelled <span class="t t-ver">Verified</span> <span class="t t-inf">Inference</span> or <span class="t t-unk">Unknown</span>.</div>
+<div class="note"><b>Presentation summary.</b> DealPilot AI turns an ideal-customer description into a ranked, evidence-backed list of companies and reviewable email drafts, using n8n for orchestration, Python for deterministic logic, Ollama for local language tasks and PostgreSQL for traceable storage. Nothing is sent without human approval.</div>
+</section>
+
+<section id="b" data-t="The Business Problem"><h2><span class="k">B</span>The Business Problem</h2>
+<p>Traditional prospecting is a chain of manual steps, each of which loses time or consistency.</p>
+<div class="g c2">
+<div class="card"><h3>Traditional workflow</h3><ol><li>Search for companies by hand.</li><li>Open each website.</li><li>Read services and business information.</li><li>Guess whether the company needs the solution.</li><li>Search for decision-makers.</li><li>Write each email individually.</li><li>Track follow-ups in notes or spreadsheets.</li></ol></div>
+<div class="card"><h3>With DealPilot AI (proposed)</h3><ol><li>Define the customer profile once.</li><li>Discover and de-duplicate candidates.</li><li>Collect public information with stored sources.</li><li>Label evidence as verified, inferred or unknown.</li><li>Score with visible reasons and a confidence level.</li><li>Draft emails grounded in that evidence.</li><li>Human approves, edits or rejects; outcomes are recorded.</li></ol></div></div>
+<h3>Costs of the manual process</h3>
+<ul><li><b>Time:</b> research effort grows linearly with every company.</li><li><b>Inconsistency:</b> two people judge the same company differently, and criteria are rarely written down.</li><li><b>Missed opportunities:</b> good-fit companies are skipped because research is tiring; weak fits get contacted because nothing was checked.</li><li><b>No learning loop:</b> without recorded evidence and outcomes, nobody can tell which criteria work.</li></ul>
+</section>
+
+<section id="c" data-t="Target Users and Use Cases"><h2><span class="k">C</span>Target Users and Use Cases</h2>
+<div class="g c3" id="users"></div>
+<h3>Example use cases <span class="t t-prop">Hypothetical scenarios</span></h3>
+<div class="g c3">
+<div class="card"><h4>Logistics companies in Germany</h4><p><b>Seller:</b> AI automation agency. <b>Possible need:</b> document processing and order handling. <b>Possible signals:</b> hiring for administrative roles, a new customer portal, public mention of manual paperwork.</p></div>
+<div class="card"><h4>Mid-sized manufacturers</h4><p><b>Seller:</b> software development firm. <b>Possible need:</b> integration between ordering and production systems. <b>Possible signals:</b> new product lines, expansion to a second site.</p></div>
+<div class="card"><h4>Professional-services firms</h4><p><b>Seller:</b> B2B SaaS vendor for client intake. <b>Possible need:</b> repetitive client onboarding. <b>Possible signals:</b> growth in offices or service lines.</p></div></div>
+</section>
+
+<section id="d" data-t="Product Capabilities"><h2><span class="k">D</span>Product Capabilities</h2>
+<p>Expand each capability for details and boundaries.</p><div id="caps"></div>
+</section>
+
+<section id="e" data-t="End-to-End Workflow"><h2><span class="k">E</span>End-to-End Product Workflow</h2>
+<p>Click any step to see what it receives, does and produces. Yellow diamonds are decisions; right-hand boxes are alternative branches.</p>
+<div id="info" class="note">Select a step in the diagram.</div>
+<div class="dg"><div id="wf"></div></div>
+<details><summary>All stages: input, action, output</summary><div class="tw"><table id="stg"></table></div></details>
+</section>
+
+<footer>DealPilot AI product explanation. No external integration is connected. All examples are hypothetical.</footer>
+</main>
+
+<script>
+/* ---------- Content data ---------- */
+const T={m:'<span class="t t-mvp">MVP</span>',f:'<span class="t t-fut">Future</span>',p:'<span class="t t-prop">Proposed</span>'};
+const USERS=[['AI automation agencies','Need a steady flow of qualified prospects for automation projects.'],['Software development companies','Look for firms with process or integration pain.'],['B2B SaaS businesses','Want ICP-matched accounts with evidence of fit.'],['Consulting firms','Need research behind every approach.'],['Logistics technology providers','Target carriers and forwarders with admin-heavy operations.'],['Small and medium B2B businesses','Lack a dedicated research team.']];
+const CAPS=[
+['1. Ideal Customer Profile configuration','m',['Target industry, location, company size, business model, service offering','Business problems the offering solves; exclusion criteria','Weights and score threshold stored with the profile'],'The ICP is the single source of criteria for every later step.'],
+['2. Company discovery','m',['Candidates from user-supplied lists and a few permitted public sources; licensed search providers where available','Normalize names, domains and locations','Flag duplicates (same domain, or near-identical name and city)'],'Respect source terms and robots rules; no scraping of sources that forbid it.'],
+['3. Company research','m',['Retrieve accessible public pages (official site first)','Summarize activities, services and possible operational needs','Store URL, timestamp, content hash and supporting excerpt'],'Summaries are drafts for review; stored sources are the record.'],
+['4. Business signal detection','m',['Find public indicators such as hiring, expansion, new services or stated process challenges','Label each as verified evidence, reasonable inference or unknown','State the uncertainty of every finding'],'A signal suggests a possibility. It never proves a problem.'],
+['5. Decision-maker discovery','f',['Identify relevant roles (Operations Manager, Head of Sales, CTO, Managing Director)','Use public professional contact information only where permitted','Show missing or uncertain contact details as such'],'Contacts are used only where public and permitted. Never guess an email and present it as verified.'],
+['6. Lead qualification and scoring','m',['Transparent, configurable weighted model','Show components, weights and reasons','Account for data completeness; report evidence confidence separately'],'Totals come from Python arithmetic, not from the LLM.'],
+['7. Personalized outreach generation','m',['Company-specific subject and body','Support goals (intro call, case study, priorities) and tones','Evidence preview showing why each claim is there'],'Drafts may use only stored signals. No invented connections or pain points.'],
+['8. Human approval and email delivery','m',['Review, edit, approve, reject or regenerate','Approval is required before any send','Delivery through a configured email provider; status and errors are recorded'],'Nothing is sent automatically; a person must approve every message.'],
+['9. Follow-up and outcome tracking','f',['Track drafts, approvals, delivery events, replies and follow-up status','Foundation for analysis and feedback-driven rule changes'],'Reply detection depends on the email integrations in use.']];
+const STAGES=[
+['Start','Operator begins a run','Opens a new workflow run','workflow_runs record'],
+['Define ICP and offering','User input','User sets target profile, offering, problems, exclusions','Saved ICP profile'],
+['Validate criteria','ICP profile','Checks required fields, weights sum to 100, sensible ranges','Valid ICP or error list'],
+['Company discovery','Valid ICP, source list','Collects candidate companies from permitted sources','Raw candidate records'],
+['Normalize and de-duplicate','Raw candidates','Cleans names and domains; flags duplicates','Unique company records'],
+['Company research','Company records','Retrieves accessible public pages respecting robots and rate limits','Stored source pages'],
+['Evidence extraction and storage','Source pages','Extracts excerpts; LLM proposes signals; Python validates structure','Signals with kind and source'],
+['Enough reliable evidence?','Signals, sources','Applies minimum-evidence rule','Yes: continue. No: mark insufficient'],
+['Business signal analysis','Signals','Groups signals by need; separates verified from inferred','Need assessment with uncertainty'],
+['Lead scoring and qualification','Need assessment, ICP weights','Deterministic scoring and confidence rules','Score, confidence, explanation'],
+['Meets threshold?','Score','Compares with configured threshold','Yes: continue. No: low priority or exclude'],
+['Decision-maker discovery','Qualified lead','Finds relevant roles from public sources where permitted','Contact candidates, gaps marked'],
+['Draft generation','Evidence, contact, goal, tone','LLM writes subject and body using only stored signals','Draft with evidence IDs'],
+['Evidence and quality validation','Draft, signals','Checks claims against signals, structure, opt-out line, banned phrases','Pass or flagged draft'],
+['Human review','Validated draft with evidence preview','Person approves, edits or rejects','Decision recorded'],
+['Email delivery','Approved draft','Sends the message through the configured email provider','Delivery attempt'],
+['Record delivery status','Provider response','Stores delivered, bounced or error','outreach_events row'],
+['Monitor replies and outcomes','Provider and mailbox events','Detects supported replies and opt-outs','Outcome events'],
+['Update lead and campaign status','Outcome events','Updates lead status and campaign counts','Current pipeline state'],
+['Collect feedback and improve rules','Approvals, edits, outcomes','Reviews which signals predicted success; proposes rule changes for human sign-off','Revised criteria proposal'],
+['End','Updated state','Run completes','Final run status']];
+/* ---------- Render helpers ---------- */
+const $=s=>document.querySelector(s),E=t=>t;
+$('#users').innerHTML=USERS.map(u=>`<div class="card"><h4>${u[0]}</h4><p>${u[1]}</p></div>`).join('');
+$('#caps').innerHTML=CAPS.map(c=>`<details><summary>${c[0]}</summary><div><ul>${c[2].map(x=>`<li>${x}</li>`).join('')}</ul><p><b>Boundary:</b> ${c[3]}</p></div></details>`).join('');
+$('#stg').innerHTML='<tr><th>#</th><th>Stage</th><th>Receives</th><th>Does</th><th>Produces</th></tr>'+STAGES.map((s,i)=>`<tr><td>${i}</td><td>${s[0]}</td><td>${s[1]}</td><td>${s[2]}</td><td>${s[3]}</td></tr>`).join('');
+/* ---------- SVG diagram helpers ---------- */
+const AR='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#586282"/></marker></defs>';
+const lines=(t,x,y,lh=15)=>{const a=t.split('|'),y0=y-(a.length-1)*lh/2+4;return a.map((s,i)=>`<text x="${x}" y="${y0+i*lh}" text-anchor="middle">${s}</text>`).join('')};
+const box=(x,y,w,h,t,c,extra='')=>`<g class="nd ${extra}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" class="${c}"/>${lines(t,x+w/2,y+h/2)}</g>`;
+const dia=(cx,cy,w,h,t,extra='')=>`<g class="nd ${extra}"><polygon points="${cx-w/2},${cy} ${cx},${cy-h/2} ${cx+w/2},${cy} ${cx},${cy+h/2}" class="dc"/>${lines(t,cx,cy)}</g>`;
+const arr=(pts,lab,lx,ly,dash)=>`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#586282" stroke-width="1.6" ${dash?'stroke-dasharray="5 4"':''} marker-end="url(#ar)"/>${lab?`<text class="lb" x="${lx}" y="${ly}">${lab}</text>`:''}`;
+
+/* Workflow diagram (Section E) */
+(function(){
+const ST=[['Start','s'],['User defines ICP|and service offering','p'],['System validates|search criteria','p'],['Company discovery','p'],['Data normalization|and duplicate detection','p'],['Company research','p'],['Evidence extraction|and storage','p'],['Enough reliable|evidence?','d'],['Business signal analysis','p'],['Lead scoring|and qualification','p'],['Meets configured|threshold?','d'],['Decision-maker discovery|(where permitted)','p'],['Personalized email|draft generation','p'],['Evidence and|quality validation','p'],['Human review','d'],['Email delivery via|configured provider','p'],['Record delivery status','p'],['Monitor supported|replies and outcomes','p'],['Update lead and|campaign status','p'],['Collect feedback and|improve qualification rules','p'],['End','s']];
+const GR=[['Configure',0,2],['Discover',3,4],['Research',5,7],['Qualify',8,10],['Prepare outreach',11,13],['Approve and deliver',14,16],['Learn',17,19]];
+const cx=250,W=300,RH=72,TOP=34,H=44,top=i=>TOP+i*RH,top0=i=>ST[i][1]=='d'?top(i)-8:top(i),bot=i=>ST[i][1]=='d'?top(i)+H+8:top(i)+H;
+let s=`<svg viewBox="0 0 770 ${TOP+21*RH+10}" role="img" aria-label="DealPilot AI end-to-end workflow">${AR}`;
+GR.forEach(g=>{const y1=top(g[1])-18,y2=top(g[2])+H+16;s+=`<rect class="band" x="14" y="${y1}" width="452" height="${y2-y1}" rx="10"/><text class="lb" x="26" y="${y1+14}" font-weight="600">${g[0]}</text>`});
+ST.forEach((n,i)=>{
+ if(n[1]=='s')s+=`<g class="nd" data-k="${i}"><rect x="${cx-70}" y="${top(i)}" width="140" height="${H}" rx="22" class="s"/><text x="${cx}" y="${top(i)+27}" text-anchor="middle" style="fill:#fff;font-weight:600">${n[0]}</text></g>`;
+ else if(n[1]=='d')s+=dia(cx,top(i)+H/2,W,H+16,n[0],'" data-k="'+i);
+ else s+=box(cx-W/2,top(i),W,H,n[0],'p','" data-k="'+i);
+ if(i<ST.length-1){const yes=n[1]=='d';s+=arr([[cx,bot(i)],[cx,top0(i+1)]],yes?(i==14?'Approve':'Yes'):'',cx+8,bot(i)+14)}});
+const side=(i,t,c,dy,lab)=>{const cy=top(i)+H/2,ny=top(i)+dy,x=520;return arr([[cx+W/2,cy],[490,cy],[490,ny+22],[x,ny+22]],lab,cx+W/2+8,cy-5)+`<g><rect x="${x}" y="${ny}" width="235" height="46" rx="9" class="${c}"/>${lines(t,x+117,ny+23)}</g>`};
+s+=side(7,'Mark insufficient data|more research (back to step 5) or exclude','sd',-3,'No');
+s+=side(10,'Save as low priority|or exclude from qualified leads','sd',-3,'No');
+s+=side(14,'Reject: discard|or revise the draft','sd',-34,'Reject');
+s+=side(14,'Edit: revise and|return to human review','p',44,'Edit');
+s+='</svg>';$('#wf').innerHTML=s;
+$('#wf').addEventListener('click',e=>{const g=e.target.closest('[data-k]');if(!g)return;document.querySelectorAll('#wf .sel').forEach(x=>x.classList.remove('sel'));g.classList.add('sel');const t=STAGES[+g.dataset.k];$('#info').innerHTML=`<b>${t[0]}</b><br><b>Receives:</b> ${t[1]}<br><b>Does:</b> ${t[2]}<br><b>Produces:</b> ${t[3]}`});
+})();
+
+/* ---------- Navigation, progress, print ---------- */
+const secs=[...document.querySelectorAll('section[id]')];
+$('#links').innerHTML=secs.map(s=>`<a href="#${s.id}" data-id="${s.id}"><b>${s.id.toUpperCase()}</b>${s.dataset.t}</a>`).join('');
+const setOn=id=>document.querySelectorAll('#links a').forEach(a=>a.classList.toggle('on',a.dataset.id==id));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setOn(e.target.id)}),{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));
+addEventListener('scroll',()=>{const h=document.documentElement;$('#prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%'},{passive:true});
+$('#mb').onclick=()=>$('#nav').classList.toggle('open');
+$('#links').onclick=()=>$('#nav').classList.remove('open');
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(d=>{d.dataset.was=d.open?1:0;d.open=true}));
+addEventListener('afterprint',()=>document.querySelectorAll('details').forEach(d=>d.open=d.dataset.was==1));
+</script>
+</body>
+</html>
